@@ -48,58 +48,58 @@
         },
         "AWSWinRegionMap"     : {
             "us-east-1" : {
-                "DC1" : "ami-dd6084b6",
-                "DC2" : "ami-d16084ba",
-                "RDGW1" : "ami-bd6084d6",
-                "RDGW2" : "ami-b76084dc"
+                "DC1" : "ami-327a5358",
+                "DC2" : "ami-297d5443",
+                "RDGW1" : "ami-a47d54ce",
+                "RDGW2" : "ami-347a535e"
             },
             "us-west-1" : {
-                "DC1" : "ami-23d73f67",
-                "DC2" : "ami-3dd73f79",
-                "RDGW1" : "ami-3bd73f7f",
-                "RDGW2" : "ami-c3d73f87"
+                "DC1" : "ami-7b70061b",
+                "DC2" : "ami-aa7305ca",
+                "RDGW1" : "ami-dd7107bd",
+                "RDGW2" : "ami-22730542"
             },
             "us-west-2" : {
-                "DC1" : "ami-fbe9d5cb",
-                "DC2" : "ami-fde9d5cd",
-                "RDGW1" : "ami-ffe9d5cf",
-                "RDGW2" : "ami-e1e9d5d1"
+                "DC1" : "ami-09789e69",
+                "DC2" : "ami-7e46a01e",
+                "RDGW1" : "ami-fe7a9c9e",
+                "RDGW2" : "ami-fd7a9c9d"
             },
             "ap-northeast-1" : {
-                "DC1" : "ami-bc8958bc",
-                "DC2" : "ami-be8958be",
-                "RDGW1" : "ami-c08958c0",
-                "RDGW2" : "ami-c28958c2"
+                "DC1" : "ami-b390aadd",
+                "DC2" : "ami-439da72d",
+                "RDGW1" : "ami-4292a82c",
+                "RDGW2" : "ami-7593a91b"
             },
             "ap-southeast-1" : {
-                "DC1" : "ami-fa4d75a8",
-                "DC2" : "ami-f84d75aa",
-                "RDGW1" : "ami-fe4d75ac",
-                "RDGW2" : "ami-fc4d75ae"
+                "DC1" : "ami-2d9e504e",
+                "DC2" : "ami-2e9e504d",
+                "RDGW1" : "ami-2f9e504c",
+                "RDGW2" : "ami-a6804ec5"
             },
             "ap-southeast-2" : {
-                "DC1" : "ami-89453cb3",
-                "DC2" : "ami-8f453cb5",
-                "RDGW1" : "ami-8d453cb7",
-                "RDGW2" : "ami-83453cb9"
+                "DC1" : "ami-9e8ca8fd",
+                "DC2" : "ami-f58eaa96",
+                "RDGW1" : "ami-098ca86a",
+                "RDGW2" : "ami-c88da9ab"
             },
             "eu-central-1" : {
-                "DC1" : "ami-128db30f",
-                "DC2" : "ami-0c8db311",
-                "RDGW1" : "ami-0e8db313",
-                "RDGW2" : "ami-088db315"
+                "DC1" : "ami-cfb0a8a3",
+                "DC2" : "ami-c0b3abac",
+                "RDGW1" : "ami-0abfa766",
+                "RDGW2" : "ami-fcb1a990"
             },
             "eu-west-1" : {
-                "DC1" : "ami-a9d9a8de",
-                "DC2" : "ami-97d9a8e0",
-                "RDGW1" : "ami-95d9a8e2",
-                "RDGW2" : "ami-93d9a8e4"
+                "DC1" : "ami-c1d564b2",
+                "DC2" : "ami-ded766ad",
+                "RDGW1" : "ami-ddd766ae",
+                "RDGW2" : "ami-45d66736"
             },
             "sa-east-1" : {
-                "DC1" : "ami-59830244",
-                "DC2" : "ami-5b830246",
-                "RDGW1" : "ami-55830248",
-                "RDGW2" : "ami-5783024a"
+                "DC1" : "ami-582faf34",
+                "DC2" : "ami-f52cac99",
+                "RDGW1" : "ami-0531b169",
+                "RDGW2" : "ami-2432b248"
             }
         }
     },

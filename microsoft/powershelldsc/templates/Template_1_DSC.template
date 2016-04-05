@@ -54,8 +54,7 @@
         "AdminPassword"       : {
             "Description" : "Password for the Administrator user account",
             "Type"        : "String",
-            "NoEcho"         : "true",
-            "Default"     : "Password123"
+            "NoEcho"         : "true"
         },
         "PullServer1PrivateIp" : {
             "Description" : "Fixed private IP for the first DSC Pull server located in AZ1",

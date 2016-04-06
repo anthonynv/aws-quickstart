@@ -720,7 +720,7 @@
         },
         "DomainController"                    : {
             "Type" : "AWS::EC2::Instance",
-            "DependsOn" : "NAT2",
+            "DependsOn" : "NAT1",
             "Metadata"  : {
                 "AWS::CloudFormation::Init" : {
                     "configSets" : {

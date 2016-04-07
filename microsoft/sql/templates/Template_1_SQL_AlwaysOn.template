@@ -90,8 +90,7 @@
             "MinLength"   : "8",
             "MaxLength"   : "32",
             "AllowedPattern" : "(?=^.{6,255}$)((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*",
-            "NoEcho"         : "true",
-            "Default"        : "Password123"
+            "NoEcho"         : "true"
         },
         "SQLServiceAccount"     : {
             "Description" : "User name for the SQL Server Service Account. This Account is a Domain User.",
@@ -107,8 +106,7 @@
             "MinLength"   : "8",
             "MaxLength"   : "32",
             "AllowedPattern" : "(?=^.{6,255}$)((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*",
-            "NoEcho"         : "true",
-            "Default"        : "Password123"
+            "NoEcho"         : "true"
         },
         "ADServer1PrivateIp"        : {
             "Description" : "Fixed private IP for the first existing Active Directory server located in AZ1",

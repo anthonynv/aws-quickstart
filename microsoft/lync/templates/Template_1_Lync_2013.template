@@ -6,15 +6,6 @@
             "Description" : "Public/private key pairs allow you to securely connect to your instance after it launches",
             "Type"        : "AWS::EC2::KeyPair::KeyName"
         },
-        "AdminPassword" : {
-            "Description" : "Password for the local administrator account on each server. Must be at least 8 characters containing letters, numbers and symbols",
-            "Type"        : "String",
-            "MinLength"   : "8",
-            "MaxLength"   : "32",
-            "AllowedPattern" : "(?=^.{6,255}$)((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*",
-            "NoEcho"         : "true",
-            "Default"        : "Password123"
-        },
         "DomainMemberSGID" : {
             "Description" : "ID of the Domain Member Security Group (e.g., sg-7f16e910)",
             "Type"        : "AWS::EC2::SecurityGroup::Id"
@@ -74,13 +65,12 @@
             "AllowedPattern" : "[a-zA-Z0-9]*"
         },
         "DomainAdminPassword" : {
-            "Description" : "Password for the domain admin user. Must be at least 8 characters containing letters, numbers and symbols",
+            "Description" : "Password for the domain admin user. Must be at least 8 characters containing letters, numbers and symbols. This password will also be set for the local administrator account on each Lync edge server, if configured.",
             "Type"        : "String",
             "MinLength"   : "8",
             "MaxLength"   : "32",
             "AllowedPattern" : "(?=^.{6,255}$)((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*",
-            "NoEcho"         : "true",
-            "Default"        : "Password123"
+            "NoEcho"         : "true"
         },
         "ADServerNetBIOSName1" : {
             "Description" : "NetBIOS name of the existing Domain Controller in AZ1",

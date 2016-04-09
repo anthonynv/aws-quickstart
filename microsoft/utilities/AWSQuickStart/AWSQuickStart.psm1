@@ -140,8 +140,8 @@ function Write-AWSQuickStartException {
         Write-Verbose "Getting total error count"
         $errorTotal = Get-AWSQuickStartErrorCount
 
-        $errorMessage = "Command failure in {0} {1} on line {2}" -f $ErrorRecord.InvocationInfo.MyCommand.name, 
-                                                              $ErrorRecord.InvocationInfo.ScriptName, $ErrorRecord.InvocationInfo.ScriptLineNumber
+        $errorMessage = "Command failure in {0} {1} on line {2} `nException: {3}" -f $ErrorRecord.InvocationInfo.MyCommand.name, 
+                                                              $ErrorRecord.InvocationInfo.ScriptName, $ErrorRecord.InvocationInfo.ScriptLineNumber, $ErrorRecord.Exception.ToString()
 
         try {
             Invoke-Expression "cfn-signal.exe -e 1 --reason='$errorMessage' `"$handle`""

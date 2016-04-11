@@ -256,8 +256,8 @@
                             "c:\\cfn\\modules\\AWSQuickStart.zip"      : {
                                 "source" : "https://s3.amazonaws.com/quickstart-reference/microsoft/utilities/latest/modules/AWSQuickStart.zip"
                             },
-                            "c:\\cfn\\scripts\\Join-ADDSDomain.ps1"    : {
-                                "source" : "https://s3.amazonaws.com/quickstart-reference/microsoft/utilities/latest/scripts/Join-ADDSDomain.ps1"
+                            "c:\\cfn\\scripts\\Join-Domain.ps1"    : {
+                                "source" : "https://s3.amazonaws.com/quickstart-reference/microsoft/utilities/latest/scripts/Join-Domain.ps1"
                             },
                             "c:\\cfn\\scripts\\Disable-AutoLogon.ps1"  : {
                                 "source" : "https://s3.amazonaws.com/quickstart-reference/microsoft/exchange/scripts/Disable-AutoLogon.ps1"
@@ -359,7 +359,18 @@
                     },
                     "prep"       : {
                         "commands" : {
-                            "a-set-dns-servers" : {
+                            "a-rename-computer" : {
+                                "command" : {
+                                    "Fn::Join" : [
+                                        "",
+                                        [
+                                            "powershell.exe -Command Rename-Computer -NewName FE1 -Restart"
+                                        ]
+                                    ]
+                                },
+                                "waitAfterCompletion" : "forever"
+                            },
+                            "b-set-dns-servers" : {
                                 "command" : {
                                     "Fn::Join" : [
                                         "",
@@ -380,7 +391,7 @@
                                 },
                                 "waitAfterCompletion" : "30"
                             },
-                            "b-disable-win-fw"  : {
+                            "c-disable-win-fw"  : {
                                 "command" : {
                                     "Fn::Join" : [
                                         "",
@@ -391,12 +402,12 @@
                                 },
                                 "waitAfterCompletion" : "0"
                             },
-                            "c-rename-and-join-domain"     : {
+                            "d-join-domain"     : {
                                 "command" : {
                                     "Fn::Join" : [
                                         "",
                                         [
-                                            "powershell.exe -Command c:\\cfn\\scripts\\Join-ADDSDomain.ps1 -DomainName ",
+                                            "powershell.exe -Command c:\\cfn\\scripts\\Join-Domain.ps1 -DomainName ",
                                             {
                                                 "Ref" : "DomainDNSName"
                                             },
@@ -411,15 +422,13 @@
                                             " -Password ",
                                             {
                                                 "Ref" : "DomainAdminPassword"
-                                            },
-                                            " -NewName FE1",
-                                            " -Restart"
+                                            }
                                         ]
                                     ]
                                 },
                                 "waitAfterCompletion" : "forever"
                             },
-                            "d-win-prereq"      : {
+                            "e-win-prereq"      : {
                                 "command" : {
                                     "Fn::Join" : [
                                         "",
@@ -632,8 +641,8 @@
                             "c:\\cfn\\modules\\AWSQuickStart.zip"      : {
                                 "source" : "https://s3.amazonaws.com/quickstart-reference/microsoft/utilities/latest/modules/AWSQuickStart.zip"
                             },
-                            "c:\\cfn\\scripts\\Join-ADDSDomain.ps1"    : {
-                                "source" : "https://s3.amazonaws.com/quickstart-reference/microsoft/utilities/latest/scripts/Join-ADDSDomain.ps1"
+                            "c:\\cfn\\scripts\\Join-Domain.ps1"    : {
+                                "source" : "https://s3.amazonaws.com/quickstart-reference/microsoft/utilities/latest/scripts/Join-Domain.ps1"
                             },
                             "c:\\cfn\\scripts\\Disable-AutoLogon.ps1"  : {
                                 "source" : "https://s3.amazonaws.com/quickstart-reference/microsoft/exchange/scripts/Disable-AutoLogon.ps1"
@@ -707,7 +716,18 @@
                     },
                     "prep"       : {
                         "commands" : {
-                            "a-set-dns-servers" : {
+                            "a-rename-computer" : {
+                                "command" : {
+                                    "Fn::Join" : [
+                                        "",
+                                        [
+                                            "powershell.exe -Command Rename-Computer -NewName FE2 -Restart"
+                                        ]
+                                    ]
+                                },
+                                "waitAfterCompletion" : "forever"
+                            },
+                            "b-set-dns-servers" : {
                                 "command" : {
                                     "Fn::Join" : [
                                         "",
@@ -728,7 +748,7 @@
                                 },
                                 "waitAfterCompletion" : "30"
                             },
-                            "b-disable-win-fw"  : {
+                            "c-disable-win-fw"  : {
                                 "command" : {
                                     "Fn::Join" : [
                                         "",
@@ -739,12 +759,12 @@
                                 },
                                 "waitAfterCompletion" : "0"
                             },
-                            "c-rename-and-join-domain"     : {
+                            "d-join-domain"     : {
                                 "command" : {
                                     "Fn::Join" : [
                                         "",
                                         [
-                                            "powershell.exe -Command c:\\cfn\\scripts\\Join-ADDSDomain.ps1 -DomainName ",
+                                            "powershell.exe -Command c:\\cfn\\scripts\\Join-Domain.ps1 -DomainName ",
                                             {
                                                 "Ref" : "DomainDNSName"
                                             },
@@ -759,15 +779,13 @@
                                             " -Password ",
                                             {
                                                 "Ref" : "DomainAdminPassword"
-                                            },
-                                            " -NewName FE2",
-                                            " -Restart"
+                                            }
                                         ]
                                     ]
                                 },
                                 "waitAfterCompletion" : "forever"
                             },
-                            "d-win-prereq"      : {
+                            "e-win-prereq"      : {
                                 "command" : {
                                     "Fn::Join" : [
                                         "",

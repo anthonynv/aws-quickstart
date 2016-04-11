@@ -75,8 +75,7 @@
             "MinLength"   : "8",
             "MaxLength"   : "32",
             "AllowedPattern" : "(?=^.{6,255}$)((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*",
-            "NoEcho"         : "true",
-            "Default"        : "Password123"
+            "NoEcho"         : "true"
         },
         "ADServer1PrivateIp"   : {
             "Description" : "Fixed private IP for the first existing Active Directory server located in AZ1",
@@ -600,7 +599,7 @@
                                     "Fn::Join" : [
                                         "",
                                         [
-                                            "powershell.exe -Command c:\\cfn\\scripts\\Download-File.ps1 -Source https://download.microsoft.com/download/C/6/8/C6899C99-F933-4181-9692-17A5BB7F1A4B/Exchange2013-x64-cu9.exe",
+                                            "powershell.exe -Command c:\\cfn\\scripts\\Download-File.ps1 -Source https://download.microsoft.com/download/2/C/1/2C151059-9B2A-466B-8220-5AE8B829489B/Exchange2013-x64-cu12.exe",
                                             " -Destination \\\\",
                                             {
                                                 "Ref" : "ADServerNetBIOSName1"

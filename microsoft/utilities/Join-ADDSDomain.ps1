@@ -19,7 +19,7 @@ param (
 try {
     $securePassword = ConvertTo-SecureString $Password -AsPlainText -Force
     $creds = New-Object System.Management.Automation.PSCredential -ArgumentList $UserName,$securePassword
-    
+
     $addComputerParams = @{
         DomainName = $DomainName
         Credential = $creds
@@ -28,8 +28,16 @@ try {
     }
 
     if (-not [string]::IsNullOrEmpty($NewName)) {
+        $renameComputerParams = @{
+            NewName = $NewName
+            Force = $true
+        }
+
+        Rename-Computer @renameComputerParams
+
         $addComputerParams.Add("NewName",$NewName)
     }
+
     if ($Restart) {
         $addComputerParams.Add("Restart",$true)
     }

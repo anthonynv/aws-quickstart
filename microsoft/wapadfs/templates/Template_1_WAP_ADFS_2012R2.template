@@ -279,7 +279,7 @@
         },
         "WAP1" : {
             "Type" : "AWS::EC2::Instance",
-            "DependsOn" : "ADFS1",
+            "DependsOn" : "ADFS1WaitCondition",
             "Metadata" : {
                 "AWS::CloudFormation::Init" : {
                     "configSets" : {
@@ -561,7 +561,7 @@
         },
         "WAP2" : {
             "Type" : "AWS::EC2::Instance",
-            "DependsOn" : "ADFS1",
+            "DependsOn" : "ADFS1WaitCondition",
             "Metadata" : {
                 "AWS::CloudFormation::Init" : {
                     "configSets" : {
@@ -1176,7 +1176,7 @@
         },
         "ADFS2" : {
             "Type" : "AWS::EC2::Instance",
-            "DependsOn" : "ADFS1",
+            "DependsOn" : "ADFS1WaitCondition",
             "Metadata" : {
                 "AWS::CloudFormation::Init" : {
                     "configSets" : {

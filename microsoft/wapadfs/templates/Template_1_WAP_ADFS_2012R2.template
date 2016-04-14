@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion" : "2010-09-09",
-    "Description" : "(0012) - This template deploys two Web Application Proxy servers into public subnets in each availability zone, as well as two ADFS servers into the private subnets in each availability zone. **WARNING** This template creates Amazon EC2 Windows instance and related resources. You will be billed for the AWS resources used if you create a stack from this template.",
+    "Description" : "QS(0012) - This template deploys two Web Application Proxy servers into public subnets in each availability zone, as well as two ADFS servers into the private subnets in each availability zone. **WARNING** This template creates Amazon EC2 Windows instance and related resources. You will be billed for the AWS resources used if you create a stack from this template.",
     "Parameters" : {
         "KeyPairName" : {
             "Description" : "Public/private key pairs allow you to securely connect to your instance after it launches",

@@ -7,13 +7,28 @@ function New-AWSQuickStartWaitHandle {
 
         [Parameter(Mandatory=$false)]
         [string]
-        $Path = 'HKLM:\SOFTWARE\AWSQuickStart\'
+        $Path = 'HKLM:\SOFTWARE\AWSQuickStart\',
+
+        [Parameter(Mandatory=$false)]
+        [switch]
+        $Base64Handle
     )
 
     process {
         try {
             Write-Verbose "Creating $Path"
             New-Item $Path -ErrorAction Stop
+
+            if ($Base64Handle) {
+                Write-Verbose "Trying to decode handle Base64 string as UTF8 string"
+                $decodedHandle = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($Handle))
+                if ($decodedHandle -notlike "http*") {
+                    Write-Verbose "Now trying to decode handle Base64 string as Unicode string"
+                    $decodedHandle = [System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String($Handle))
+                }
+                Write-Verbose "Decoded handle string: $decodedHandle"
+                $Handle = $decodedHandle
+            }
 
             Write-Verbose "Creating Handle Registry Key"
             New-ItemProperty -Path $Path -Name Handle -Value $Handle -ErrorAction Stop  

@@ -18,8 +18,6 @@
     $FirstServer
 )
 
-Start-Transcript -Path C:\cfn\log\Install-ADFS.ps1.txt -Append
-
 function New-CertificateRequest {
     param (
         [Parameter(Mandatory=$true, HelpMessage = "Please enter the subject beginning with CN=")]
@@ -89,10 +87,15 @@ function New-CertificateRequest {
     }
 }
 
-$Pass = ConvertTo-SecureString $Password -AsPlainText -Force
-$Credential = New-Object System.Management.Automation.PSCredential -ArgumentList "$DomainNetBIOSName\$Username", $Pass
 
 try {
+    Start-Transcript -Path C:\cfn\log\Install-ADFS.ps1.txt -Append
+
+    $ErrorActionPreference = "Stop"
+
+    $Pass = ConvertTo-SecureString $Password -AsPlainText -Force
+    $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList "$DomainNetBIOSName\$Username", $Pass
+
     if($FirstServer) {
         $CertificateAuthority = "$DCName.$DomainDNSName\$DomainNetBIOSName-$DCName-CA"
         $CertificateADFSsubject = "*.$DomainDNSName"

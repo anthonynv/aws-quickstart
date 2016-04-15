@@ -17,6 +17,9 @@
 
 try {
     Start-Transcript -Path C:\cfn\log\Install-WAP.ps1.txt -Append
+
+    $ErrorActionPreference = "Stop"
+
     $Pass = ConvertTo-SecureString $Password -AsPlainText -Force
     $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList "$DomainNetBIOSName\$Username", $Pass
 

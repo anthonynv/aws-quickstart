@@ -42,6 +42,50 @@ function New-AWSQuickStartWaitHandle {
     }
 }
 
+function New-AWSQuickStartResourceSignal {
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory)]
+        [string]
+        $Stack,
+
+        [Parameter(Mandatory)]
+        [string]
+        $Resource,
+
+        [Parameter(Mandatory)]
+        [string]
+        $Region,
+
+        [Parameter(Mandatory=$false)]
+        [string]
+        $Path = 'HKLM:\SOFTWARE\AWSQuickStart\'
+    )
+
+    try {
+        $ErrorActionPreference = "Stop"
+
+        Write-Verbose "Creating $Path"
+        New-Item $Path
+
+        Write-Verbose "Creating Stack Registry Key"
+        New-ItemProperty -Path $Path -Name Stack -Value $Stack
+
+        Write-Verbose "Creating Resource Registry Key"
+        New-ItemProperty -Path $Path -Name Resource -Value $Resource
+
+        Write-Verbose "Creating Region Registry Key"
+        New-ItemProperty -Path $Path -Name Region -Value $Region
+
+        Write-Verbose "Creating ErrorCount Registry Key"
+        New-ItemProperty -Path $Path -Name ErrorCount -Value 0 -PropertyType dword
+    }
+    catch {
+        Write-Verbose $_.Exception.Message
+    }
+}
+
+
 function Get-AWSQuickStartErrorCount {
     [CmdletBinding()]
     Param(
@@ -97,12 +141,39 @@ function Get-AWSQuickStartWaitHandle {
 
     process {
         try {
+            $ErrorActionPreference = "Stop"
+
             Write-Verbose "Getting Handle key value from $Path"
-            Get-ItemProperty $Path -ErrorAction Stop | Select-Object -ExpandProperty Handle        
+            Get-ItemProperty $Path | Select-Object -ExpandProperty Handle
         }
         catch {
             Write-Verbose $_.Exception.Message
         }
+    }
+}
+
+function Get-AWSQuickStartResourceSignal {
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory=$false)]
+        [string]
+        $Path = 'HKLM:\SOFTWARE\AWSQuickStart\'
+    )
+
+    try {
+        $ErrorActionPreference = "Stop"
+
+        Write-Verbose "Getting Stack, Resource, and Region key values from $Path"
+        $resourceSignal = @{
+            Stack = $(Get-ItemProperty $Path | Select-Object -ExpandProperty Stack)
+            Resource = $(Get-ItemProperty $Path | Select-Object -ExpandProperty Resource)
+            Region = $(Get-ItemProperty $Path | Select-Object -ExpandProperty Region)
+        }
+
+        New-Object -TypeName PSObject -Property $resourceSignal
+    }
+    catch {
+        Write-Verbose $_.Exception.Message
     }
 }
 
@@ -147,19 +218,27 @@ function Write-AWSQuickStartException {
     )
 
     process {
-        $handle = Get-AWSQuickStartWaitHandle
-
-        Write-Verbose "Incrementing error count"
-        Set-AWSQuickStartErrorCount -Count 1
-
-        Write-Verbose "Getting total error count"
-        $errorTotal = Get-AWSQuickStartErrorCount
-
-        $errorMessage = "Command failure in {0} {1} on line {2} `nException: {3}" -f $ErrorRecord.InvocationInfo.MyCommand.name, 
-                                                              $ErrorRecord.InvocationInfo.ScriptName, $ErrorRecord.InvocationInfo.ScriptLineNumber, $ErrorRecord.Exception.ToString()
-
         try {
-            Invoke-Expression "cfn-signal.exe -e 1 --reason='$errorMessage' `"$handle`""
+            Write-Verbose "Incrementing error count"
+            Set-AWSQuickStartErrorCount -Count 1
+
+            Write-Verbose "Getting total error count"
+            $errorTotal = Get-AWSQuickStartErrorCount
+
+            $errorMessage = "Command failure in {0} {1} on line {2} `nException: {3}" -f $ErrorRecord.InvocationInfo.MyCommand.name, 
+                                                        $ErrorRecord.InvocationInfo.ScriptName, $ErrorRecord.InvocationInfo.ScriptLineNumber, $ErrorRecord.Exception.ToString()
+
+            $handle = Get-AWSQuickStartWaitHandle -ErrorAction SilentlyContinue
+            if ($handle) {
+                Invoke-Expression "cfn-signal.exe -e 1 --reason='$errorMessage' '$handle'"
+            } else {
+                $resourceSignal = Get-AWSQuickStartResourceSignal -ErrorAction SilentlyContinue
+                if ($resourceSignal) {
+                    Invoke-Expression "cfn-signal.exe -e 1 --stack '$($resourceSignal.Stack)' --resource '$($resourceSignal.Resource)' --region '$($resourceSignal.Region)'"
+                } else {
+                    throw "No handle or stack/resource/region found in registry"
+                }
+            }
         }
         catch {
             Write-Verbose $_.Exception.Message
@@ -178,8 +257,17 @@ function Write-AWSQuickStartStatus {
             Write-Verbose "Checking error count"
             if((Get-AWSQuickStartErrorCount) -eq 0) {
                 Write-Verbose "Getting Handle"
-                $handle = Get-AWSQuickStartWaitHandle 
-                Invoke-Expression "cfn-signal.exe -e 0 `"$handle`""
+                $handle = Get-AWSQuickStartWaitHandle -ErrorAction SilentlyContinue
+                if ($handle) {
+                    Invoke-Expression "cfn-signal.exe -e 0 '$handle'"
+                } else {
+                    $resourceSignal = Get-AWSQuickStartResourceSignal -ErrorAction SilentlyContinue
+                    if ($resourceSignal) {
+                        Invoke-Expression "cfn-signal.exe -e 0 --stack '$($resourceSignal.Stack)' --resource '$($resourceSignal.Resource)' --region '$($resourceSignal.Region)'"
+                    } else {
+                        throw "No handle or stack/resource/region found in registry"
+                    }
+                }
             }
         }
         catch {
